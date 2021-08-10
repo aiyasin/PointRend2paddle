@@ -3,8 +3,9 @@ import numpy as np
 import random
 import cv2
 from typing import Any, List, Optional
+from utils.fvcoretransform import Transform
 
-class ColorAugSSDTransform(object):
+class ColorAugSSDTransform(Transform):
     """
     A color related data augmentation used in Single Shot Multibox Detector (SSD).
 

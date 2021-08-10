@@ -4,9 +4,9 @@
 import functools
 import inspect
 import logging
-from fvcorecfg import CfgNode as _CfgNode
+from .fvcorecfg import CfgNode as _CfgNode
 
-from pathmanager import PathManager
+from .pathmanager import PathManager
 
 
 class CfgNode(_CfgNode):
@@ -104,7 +104,6 @@ def get_cfg() -> CfgNode:
         a detectron2 CfgNode instance.
     """
     from .defaults import _C
-
     return _C.clone()
 
 

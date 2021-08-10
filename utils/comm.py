@@ -9,7 +9,9 @@ import logging
 import numpy as np
 import pickle
 import torch
-import torch.distributed as dist
+# import torch.distributed as dist
+import paddle.distributed as dist
+
 
 _LOCAL_PROCESS_GROUP = None
 """
@@ -21,15 +23,13 @@ This variable is set when processes are spawned by `launch()` in "engine/launch.
 def get_world_size() -> int:
     if not dist.is_available():
         return 1
-    if not dist.is_initialized():
+    if not dist.init_parallel_env():
         return 1
     return dist.get_world_size()
 
 
 def get_rank() -> int:
-    if not dist.is_available():
-        return 0
-    if not dist.is_initialized():
+    if not dist.init_parallel_env():
         return 0
     return dist.get_rank()
 
@@ -41,7 +41,7 @@ def get_local_rank() -> int:
     """
     if not dist.is_available():
         return 0
-    if not dist.is_initialized():
+    if not dist.init_parallel_env():
         return 0
     assert (
         _LOCAL_PROCESS_GROUP is not None
@@ -57,7 +57,7 @@ def get_local_size() -> int:
     """
     if not dist.is_available():
         return 1
-    if not dist.is_initialized():
+    if not dist.init_parallel_env():
         return 1
     return dist.get_world_size(group=_LOCAL_PROCESS_GROUP)
 
@@ -73,7 +73,7 @@ def synchronize():
     """
     if not dist.is_available():
         return
-    if not dist.is_initialized():
+    if not dist.init_parallel_env():
         return
     world_size = dist.get_world_size()
     if world_size == 1:

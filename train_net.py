@@ -10,14 +10,17 @@ This script is a simplified version of the training script in detectron2/tools.
 import os
 import torch
 
-import detectron2.data.transforms as T
-import detectron2.utils.comm as comm
+# import detectron2.data.transforms as T
+import utils.transform as T
+import utils.comm as comm
 from detectron2.checkpoint import DetectionCheckpointer
-from detectron2.config import get_cfg
+from utils.pointrcfg import get_cfg
 from detectron2.data import DatasetMapper, MetadataCatalog, build_detection_train_loader
 #from detectron2.engine import DefaultTrainer, default_argument_parser, default_setup, launch
 from engine.argdefault import default_argument_parser
 from engine.launch import launch
+from engine.defaults import default_setup
+
 
 from detectron2.evaluation import (
     CityscapesInstanceEvaluator,
@@ -28,7 +31,8 @@ from detectron2.evaluation import (
     SemSegEvaluator,
     verify_results,
 )
-from detectron2.projects.point_rend import ColorAugSSDTransform, add_pointrend_config
+
+from point_rend import ColorAugSSDTransform, add_pointrend_config
 
 
 def build_sem_seg_train_aug(cfg):
@@ -145,11 +149,11 @@ def main(args):
 if __name__ == "__main__":
     args = default_argument_parser().parse_args()
     print("Command Line Args:", args)
-    # launch(
-    #     main,
-    #     args.num_gpus,
-    #     num_machines=args.num_machines,
-    #     machine_rank=args.machine_rank,
-    #     dist_url=args.dist_url,
-    #     args=(args,),
-    # )
+    launch(
+        main,
+        args.num_gpus,
+        num_machines=args.num_machines,
+        machine_rank=args.machine_rank,
+        dist_url=args.dist_url,
+        args=(args,),
+    )
