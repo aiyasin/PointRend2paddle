@@ -9,7 +9,6 @@ import logging
 import numpy as np
 import pickle
 import torch
-# import torch.distributed as dist
 import paddle.distributed as dist
 
 
@@ -21,8 +20,6 @@ This variable is set when processes are spawned by `launch()` in "engine/launch.
 
 
 def get_world_size() -> int:
-    if not dist.is_available():
-        return 1
     if not dist.init_parallel_env():
         return 1
     return dist.get_world_size()

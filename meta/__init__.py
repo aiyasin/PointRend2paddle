@@ -1,0 +1,1 @@
+from semantic_seg import SEM_SEG_HEADS_REGISTRY

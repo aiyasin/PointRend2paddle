@@ -1,5 +1,5 @@
 # Copyright (c) Facebook, Inc. and its affiliates.
-from .pointrcfg import CfgNode as CN
+from utils.cfg_node import CfgNode as CN
 
 # -----------------------------------------------------------------------------
 # Convention about Training / Test specific parameters

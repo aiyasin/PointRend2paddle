@@ -9,20 +9,29 @@ class Registry(Iterable[Tuple[str, Any]]):
     """
     The registry that provides name -> object mapping, to support third-party
     users' custom modules.
+
     To create a registry (e.g. a backbone registry):
+
     .. code-block:: python
+
         BACKBONE_REGISTRY = Registry('BACKBONE')
+
     To register an object:
+
     .. code-block:: python
+
         @BACKBONE_REGISTRY.register()
         class MyBackbone():
             ...
+
     Or:
+
     .. code-block:: python
+
         BACKBONE_REGISTRY.register(MyBackbone)
     """
 
-    def __init__(self, name: str) -> None:
+    def __init__(self, name: str) -> None:      #"META_ARCH"
         """
         Args:
             name (str): the name of this registry
@@ -56,7 +65,7 @@ class Registry(Iterable[Tuple[str, Any]]):
         name = obj.__name__
         self._do_register(name, obj)
 
-    def get(self, name: str) -> Any:
+    def get(self, name: str) -> Any:        #"SemanticSegmentor"
         ret = self._obj_map.get(name)
         if ret is None:
             raise KeyError(
@@ -79,7 +88,7 @@ class Registry(Iterable[Tuple[str, Any]]):
 
     # pyre-fixme[4]: Attribute must be annotated.
     __str__ = __repr__
-
+    
 def locate(name: str) -> Any:
     """
     Locate and return an object ``x`` using an input string ``{x.__module__}.{x.__qualname__}``,
@@ -101,7 +110,6 @@ def locate(name: str) -> Any:
             obj = _locate(name)  # it raises if fails
 
     return obj
-
 
 def _convert_target_to_string(t: Any) -> str:
     """

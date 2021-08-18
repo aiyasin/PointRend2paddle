@@ -3,10 +3,10 @@ import functools
 import logging
 import os
 import sys
-from tabulate import tabulate
+# from tabulate import tabulate
 from termcolor import colored
 
-from utils.pathmanager import PathManager
+from utils.path_manager import PathManager
 
 class _ColorfulFormatter(logging.Formatter):
     def __init__(self, *args, **kwargs):

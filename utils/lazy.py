@@ -14,7 +14,7 @@ import cloudpickle
 import yaml
 from omegaconf import DictConfig, ListConfig, OmegaConf
 
-from utils.pathmanager import PathManager
+from utils.path_manager import PathManager
 from utils.register import _convert_target_to_string
 
 __all__ = ["LazyCall", "LazyConfig"]

@@ -24,8 +24,8 @@ Instructions to bump version:
 import logging
 from typing import List, Optional, Tuple
 
-from .pointrcfg import CfgNode as CN
-from .defaults import _C
+from utils.cfg_node import CfgNode as CN
+from utils.defaults import _C
 
 __all__ = ["upgrade_config", "downgrade_config"]
 
