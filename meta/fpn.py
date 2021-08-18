@@ -4,20 +4,20 @@ import paddle
 import paddle.nn.functional as F
 from paddle import nn
 
-from layers import Conv2d
+from meta.layers import Conv2d
 from utils.shape_spec import ShapeSpec
-from get_normaliz import get_norm
+from meta.get_normaliz import get_norm
 # from backbone import Backbone
-from built_backbone import BACKBONE_REGISTRY
+from meta.built_backbone import BACKBONE_REGISTRY
 
 __all__ = ["build_resnet_fpn_backbone", "FPN"]
 
-def _init_weights(self):
+def _init_weights():
     weight_attr = paddle.ParamAttr(initializer=nn.initializer.KaimingUniform())
     bias_attr = paddle.ParamAttr(initializer=nn.initializer.KaimingUniform())
     return weight_attr, bias_attr
 
-class FPN(object):
+class FPN(nn.Layer):
     """
     This module implements :paper:`FPN`.
     It creates pyramid features built on top of some input feature maps.
@@ -220,7 +220,7 @@ def build_resnet_fpn_backbone(cfg, input_shape: ShapeSpec):
     Returns:
         backbone (Backbone): backbone module, must be a subclass of :class:`Backbone`.
     """
-    from resnet import resnet101
+    from paddle.vision.models.resnet import resnet101
     bottom_up = resnet101(pretrained=False,num_classes=19,with_pool=True)
     in_features = cfg.MODEL.FPN.IN_FEATURES
     out_channels = cfg.MODEL.FPN.OUT_CHANNELS

@@ -1,8 +1,8 @@
 from engine.argdefault import default_argument_parser
 from engine.defaults import default_setup
 from config.config import get_cfg
-from point_rent.config import add_pointrend_config
-
+from point_rend.config import add_pointrend_config
+from meta.built_meta_arch import build_model
 
 def setup(args):
     """
@@ -18,4 +18,4 @@ def setup(args):
 if __name__ == '__main__':
     args = default_argument_parser().parse_args()
     cfg = setup(args)
-    print(cfg)
+    model = build_model(cfg)

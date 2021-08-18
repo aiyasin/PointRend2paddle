@@ -1,0 +1,1 @@
+from point_rend.semantic_seg import PointRendSemSegHead 

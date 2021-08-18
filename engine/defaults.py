@@ -5,10 +5,9 @@ import numpy as np
 import random
 from datetime import datetime
 import paddle
-import weakref
-from typing import List, Optional
+from typing import List
 
-import utils.comm as comm
+# import utils.comm as comm
 from utils.cfg_node import CfgNode
 from utils.path_manager import PathManager
 from utils.logger import setup_logger 
@@ -67,26 +66,26 @@ def _try_get_key(cfg, *keys, default=None):
 
 def default_setup(cfg, args):
     output_dir = _try_get_key(cfg, "OUTPUT_DIR", "output_dir", "train.output_dir")
-    if comm.is_main_process() and output_dir:
+    if  output_dir:
         PathManager.mkdirs(output_dir)
 
-    rank = comm.get_rank()
-    setup_logger(output_dir, distributed_rank=rank, name="fvcore")
-    logger = setup_logger(output_dir, distributed_rank=rank)
+    # rank = comm.get_rank()
+    setup_logger(output_dir, name="PointRend")
+    logger = setup_logger(output_dir)
 
-    logger.info("Rank of current process: {}. World size: {}".format(rank, comm.get_world_size()))
+    # logger.info("Rank of current process: {}. World size: {}".format(rank, comm.get_world_size()))
     # logger.info("Environment info:\n" + collect_env_info())
 
-    logger.info("Command line arguments: " + str(args))
-    if hasattr(args, "config_file") and args.config_file != "":
-        logger.info(
-            "Contents of args.config_file={}:\n{}".format(
-                args.config_file,
-                _highlight(PathManager.open(args.config_file, "r").read(), args.config_file),
-            )
-        )
+    # logger.info("Command line arguments: " + str(args))
+    # if hasattr(args, "config_file") and args.config_file != "":
+    #     logger.info(
+    #         "Contents of args.config_file={}:\n{}".format(
+    #             args.config_file,
+    #             _highlight(PathManager.open(args.config_file, "r").read(), args.config_file),
+    #         )
+    #     )
 
-    if comm.is_main_process() and output_dir:
+    if output_dir:
         # Note: some of our scripts may expect the existence of
         # config.yaml in output directory
         path = os.path.join(output_dir, "config.yaml")
@@ -100,4 +99,4 @@ def default_setup(cfg, args):
 
     # make sure each worker has a different, yet deterministic seed if specified
     seed = _try_get_key(cfg, "SEED", "train.seed", default=-1)
-    seed_all_rng(None if seed < 0 else seed + rank)
+    seed_all_rng(None if seed < 0 else seed + 1)

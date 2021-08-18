@@ -5,12 +5,12 @@ import numpy as np
 from typing import Callable, Dict, Optional, Tuple, Union
 
 from utils.register import Registry
-from built_meta_arch import META_ARCH_REGISTRY
+from meta.built_meta_arch import META_ARCH_REGISTRY
 from utils.configurables import configurable
-from built_backbone import build_backbone
+from meta.built_backbone import build_backbone
 from utils.shape_spec import ShapeSpec
-from get_normaliz import get_norm
-from layers import Conv2d
+from meta.get_normaliz import get_norm
+from meta.layers import Conv2d
 # from utils import weight_init
 
 def sem_seg_postprocess(result, img_size, output_height, output_width):

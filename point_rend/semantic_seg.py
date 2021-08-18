@@ -7,12 +7,12 @@ from paddle.nn import functional as F
 
 from utils.shape_spec import ShapeSpec
 from meta import SEM_SEG_HEADS_REGISTRY
-from point_features import (
+from point_rend.point_features import (
     get_uncertain_point_coords_on_grid,
     get_uncertain_point_coords_with_randomness,
     point_sample,
 )
-from point_head import build_point_head
+from point_rend.point_head import build_point_head
 
 
 def calculate_uncertainty(sem_seg_logits):
